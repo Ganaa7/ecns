@@ -1,0 +1,84 @@
+/* 
+    Document   : print
+    Created on : Jun 5, 2012, 9:55:42 AM
+    Author     : developer
+    Description:
+        Purpose of the stylesheet follows.
+*/
+form {
+	display: none;
+}
+
+body {
+	height: 100%;
+	overflow: visible !important;
+}
+
+#header {
+	display: none;
+}
+
+#section {
+	display: none;
+}
+
+#footer {
+	display: none;
+}
+
+#container {
+	top: 0;
+	position: relative;
+}
+
+#print_btn {
+	display: none;
+}
+
+#report {
+	position: relative;
+	display: block;
+	clear: both;
+	width: 900px;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+table.report {
+	margin-left: 3px;
+}
+
+table.printed td.tdcss {
+	background-color: #616161 !important;
+	font-weight: bold;
+	background: #222 url(../images/tr_bk.png) repeat-x;
+}
+
+table {
+	height: auto;
+	position: relative;
+}
+
+#cell {
+	padding: 0px;
+	font-size: 8pt;
+	border: 1px solid #000;
+	color: #000;
+	font-weight: normal;
+	vertical-align: top;
+	text-align: left;
+	word-wrap: break-word;
+}
+
+#cell div {
+	display: block;
+	word-wrap: break-word;
+}
+
+fieldset {
+	display: none;
+}
+
+div.bottom {
+	display: none;
+}

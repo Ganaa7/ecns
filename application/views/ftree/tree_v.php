@@ -5,10 +5,16 @@ foreach ( $libraries ['js_files'] as $value ) {
 
 ?>
 <link rel="stylesheet" type="text/css"
-	href="<? echo base_url();?>assets/treeview/css/jquery.treeview.css"/>
+	href="<?php echo base_url();?>assets/treeview/css/jquery.treeview.css"/>
 
 <link rel="stylesheet" type="text/css"
-	href="<? echo base_url();?>assets/treeview/css/screen.css">
+	href="<?php echo base_url();?>assets/treeview/css/screen.css">
+
+<style>
+	.undevelop{
+		border-radius: 0px 30px;
+	}
+</style>
 
 	<script type="text/javascript">
 	var CLIPBOARD = "";
@@ -184,9 +190,9 @@ foreach ( $libraries ['js_files'] as $value ) {
 <?php echo "<h4 style='text-align:center; margin-top:15px;'>\"$equipment\" ТӨХӨӨӨРӨМЖИЙН ГЭМТЛИЙН МОД</h4>"; ?>
 
 <div style="float: right; margin-right: 200px; margin-bottom: 10px;">	
-	<a href="/ecns/ftree/tree/<?=$equipment_id?>/" class="button">Босоогоор харах</a> 
+	<a href="<?=base_url();?>ftree/tree/<?=$equipment_id?>/" class="button">Босоогоор харах</a> 
 	<!-- <a href="#" onclick="_d_event()" class="button">Event нэмэх</a> -->
-	<a href="/ecns/ftree/help" class="button">Тусламж</a>
+	<a href="<?=base_url();?>ftree/help" class="button">Тусламж</a>
 </div>
 
 <div style="margin-bottom:20px;" id="sidetreecontrol">

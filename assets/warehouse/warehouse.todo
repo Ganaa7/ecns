@@ -1,0 +1,15 @@
+wharehouse:
+
+   1. contorller wh_spare library Warehouse
+
+   view: view\wh_spare\   
+   theme: location assets\warehouse\theme 
+
+   2. get_invoice_dtl: Warehouse->get_exp_dtl? // Үлдэгдлийг авна
+
+
+   SELECT * FROM wh_invoice A
+      JOIN (SELECT * FROM wh_invoice_dtl WHERE serial_x not in 
+              (SELECT serial_x FROM wh_invoice_dtl where aqty =-1 and spare_id = $spare_id) and spare_id =  $spare_id) B ON A.id =B.invoice_id 
+      left join wm_view_pallet C ON b.pallet_id= C.pallet_id
+      WHERE invoicedate <=curdate()";

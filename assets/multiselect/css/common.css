@@ -1,0 +1,17 @@
+						{margin:40px 0 0; border-top:1px dotted; padding:10px 0 0;}
+	.left {float:left;}
+	.right {float:right;}
+	.clear {clear:both;}
+	
+	
+	/* multiselect styles */
+	.multiselect {
+		width: 550px;
+		height: 200px;
+	}
+	
+	#switcher {
+		margin-top: 20px;
+	}
+	
+	form {margin: 0; padding: 0;}
