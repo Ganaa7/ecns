@@ -56,7 +56,13 @@ class Equipment_model extends MY_Model {
 
         array( 'field' => 'spec',
                'label' => 'Үзүүлэлт',
-               'rules' => 'required')
+               'rules' => 'required'),
+
+         array(
+            'field' => 'spare_id_type',
+            'label' => 'Сэлбэгийн дугаар',
+            'rules' => 'required|is_natural_no_zero'
+         ),
 
     );
 
@@ -228,12 +234,17 @@ class Equipment_model extends MY_Model {
 
     function get_equipment(){
 
-      if(in_array($this->session->userdata('sec_code'), array('COM', 'NAV', 'ELC', 'SUR')))
+      if(in_array($this->session->userdata('sec_code'), array('COM', 'NAV', 'ELC', 'SUR', 'CHI'))){
 
-        
-          return $this->dropdown_by('equipment_id', 'equipment',array('section_id' =>$this->session->userdata('section_id')));
+          if(in_array($this->session->userdata('sec_code'), array('COM', 'NAV', 'ELC', 'SUR')))
 
-      else
+            return $this->dropdown_by('equipment_id', 'equipment', array('section_id' =>$this->session->userdata('section_id'), 'section_id'=>10));
+
+          else 
+
+            return $this->dropdown_by('equipment_id', 'equipment',array('section_id' =>$this->session->userdata('section_id')));
+
+      }else
 
         return   $this->dropdown('equipment');
 

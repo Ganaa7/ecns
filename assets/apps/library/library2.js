@@ -125,7 +125,6 @@ function upload_file(selector){
 
             if (json.status == "success") {
             // if ajax return success
-             console.log('selector none');
 
                $("input[name=ebook]").val(json.name);
                // hide file

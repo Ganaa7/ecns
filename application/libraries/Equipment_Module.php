@@ -122,11 +122,16 @@ class Equipment_Crud extends Equipment_Layout{
         if($this->equipment->validate($this->equipment->validate)){
 
             $data = $this->equipment->array_from_post(array('section_id', 'sector_id', 'equipment', 'code', 'intend', 'spec', 'year_init'));
-
-            $data['created_at'] =date('Y-m-d H:i:s');
-
-            $data['sp_id']=$this->equipment->get_spare_id($data['section_id'], $data['sector_id']);
             
+            $data['created_at'] =date('Y-m-d H:i:s');
+            
+            if($this->input->get_post('spare_type_id')==1)
+            // if spare_id_type = 1 bol shineer olgono
+                $data['sp_id']=$this->equipment->get_spare_id($data['section_id'], $data['sector_id']);
+            else
+                //spare_type_equiment_id утгаар from equipment spare_id-г авч хэрэглэнэ
+                $data['parent_id'] = $this->input->get_post('equipment_spare_id');
+                        
             if ($id = $this->equipment->insert($data, TRUE)){
               $return = array (
                     'status' => 'success',
@@ -207,6 +212,26 @@ class Equipment_Crud extends Equipment_Layout{
        $library = $this->equipment->with('section')->get($id);
 
        echo json_encode($library);
+    }
+
+    protected function get_spare(){
+
+       $section_id = $this->input->get_post ( 'section_id' );
+       
+       $sector_id = $this->input->get_post ( 'sector_id' );
+
+       $query = $this->Obj->db->query("select sp_id, equipment from equipment2 where section_id = $section_id and sector_id = $sector_id and sp_id is not null order  by equipment");
+       
+       if($query->num_rows()>0){
+
+            foreach ($query->result() as $row) {
+
+                $result_array[$row->sp_id] = $row->equipment;
+            }
+       }else $result_array = null;
+        
+
+       echo json_encode($result_array);
     }
 
     protected function edit(){
@@ -405,7 +430,14 @@ class Equipment_Module extends Equipment_Crud{
 
                     case 'device' :
 
-                      $this->device_grid();                            
+                      $this->device_grid();  
+                                                
+                      break;
+
+                    case 'get_spare' :
+
+                      $this->get_spare();  
+
                       break;
                 
     	       }

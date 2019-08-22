@@ -14,7 +14,6 @@ class Material_model extends MY_Model {
         return $data;
     }
 
-    // protected 
    public $belongs_to = array('device' => array('model' => 'device_model', 'primary_key' => 'device_id' ));
 
    public $validate = array(
@@ -46,10 +45,15 @@ class Material_model extends MY_Model {
    }
 
    function array_from_post($fields){
-      $data = array();
+      
+       $data = array();
+
       foreach ($fields as $field) {
+
         $data[$field]=$this->input->post($field);
+
       }
+      
       return $data;
   }
 

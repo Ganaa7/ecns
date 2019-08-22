@@ -65,6 +65,7 @@ $(function() {
                   trElement.removeClass('ui-widget-content');
                   trElement.addClass('argent'); //red                
               }              
+
               if(check_date(rowData.expireddate)>=30&&check_date(rowData.expireddate)<=60&&rowData.expireddate.length>0){
                  trElement.removeClass('ui-widget-content');
                  trElement.addClass('warning');                  
@@ -284,17 +285,25 @@ function archive_action (cellvalue, options, rowObject) {
 
 
 function t_action (cellvalue, options, rowObject) {     
+  
 	   action_str ="<div title='Дэлгэрэнгүй' style='float:left;cursor:pointer;' class='ui-pg-div ui-inline-edit'><a target='_blank' href='"+base_url+"/pdf/web/viewer.html?file=../../download/contract_files/"+rowObject.filename+"' class='ui-icon ui-icon-extlink'></a></div></div>";
-	   var fields = $( "#action" ).serializeArray();
+     
+     var fields = $( "#action" ).serializeArray();
+     
 	   $('input.action').each(function() {
-	     switch($(this).val()){	    
+
+	     switch($(this).val()){
+
 	        case 'edit':
-	            action_str=action_str+"<div title='Засах' style='float:left;cursor:pointer;' class='ui-pg-div ui-icon-plus'><span onclick='init_edit("+rowObject.trainer_id+")' class='ui-icon ui-icon-wrench'></span></div></div>";
-	        break;	        
+	            action_str=action_str+"<div title='Засах' style='float:left;cursor:pointer;' class='ui-pg-div ui-icon-plus'><span onclick='init_edit("+rowObject.id+")' class='ui-icon ui-icon-wrench'></span></div></div>";
+          break;	
+                  
 	        case 'delete':
-	            action_str=action_str+"<div title='Устгах' style='float:left;cursor:pointer;' class='ui-pg-div ui-inline-edit'><span onclick='_delete("+rowObject.trainer_id+")' target ="+options.log_num+" class='ui-icon ui-icon-trash'></span></div></div>";    
-	        break;
-	    }
+	            action_str=action_str+"<div title='Устгах' style='float:left;cursor:pointer;' class='ui-pg-div ui-inline-edit'><span onclick='_delete("+rowObject.id+")' target ="+options.log_num+" class='ui-icon ui-icon-trash'></span></div></div>";    
+          break;
+          
+      }
+      
 	   });
 	   return action_str;
 }
@@ -309,7 +318,7 @@ function init_view(filename) {
 function init_edit(id) {
 	//alert(id);
 //	window.location.href='/ecns/training/index/edit/'+id;
-  window.location.href=base_url+'/training/trainer/index/edit/'+id;
+  window.location.href=base_url+'/contract/settings/edit/'+id;
 }
 
 function view_link(cellValue, options, rowObject){

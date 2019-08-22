@@ -68,14 +68,17 @@ class maintenance extends CNS_Controller {
 
     $location = $this->location_model->dropdown('name');
 
-    if($this->section_id > 4)    
-    
+    if(in_array($this->section_id, array(1, 2, 3, 4, 10)))
+      
+      $this->data['employee'] = $this->employee_model->dropdown_by('employee_id', 'fullname', array('section_id' => $this->section_id));
+      
+    else
+
       $this->data['employee'] = $this->employee_model->dropdown('fullname');
 
-    else
-      $this->data['employee'] = $this->employee_model->dropdown_by('employee_id', 'fullname', array('section_id'=>$this->section_id));
-    
+          
     $location[0] = 'Бүх байршил';
+
     ksort($location);
 
     $this->data ['location'] = $location;

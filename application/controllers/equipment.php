@@ -440,7 +440,6 @@ class equipment extends CNS_Controller {
 
         }
 
-        // $this->data['page']  = 'equipment/passport';
         $this->data['page']  = 'device/add_more'; 
         
         $this->load->view('index', $this->data);

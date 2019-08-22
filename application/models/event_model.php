@@ -124,7 +124,7 @@ class event_model extends MY_Model {
 
     function get_group($sec_code, $role) {
 
-  		if ($sec_code == 'COM' || $sec_code == 'NAV' || $sec_code == 'ELC' || $sec_code == 'SUR') {
+  		if ($sec_code == 'COM' || $sec_code == 'NAV' || $sec_code == 'ELC' || $sec_code == 'SUR' || $sec_code =="CHI") {
 
   			switch ($role) {
 
@@ -229,6 +229,10 @@ class event_model extends MY_Model {
       if ($group == 'ENG' || $group == 'ENG_CHIEF') {
 
          $this->db->where ( 'm_event.section_id', $this->section_id );
+         
+         if($this->section_id < 5)
+
+            $this->db->or_where ( 'm_event.section_id', 10 );
 
       }
 

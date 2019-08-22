@@ -99,7 +99,8 @@ class h_invoice_model extends MY_Model {
         
             $this->db->join('h_invoice_dtl', "_wh_vw_spare.spare_id = h_invoice_dtl.spare_id", 'left');                
             
-            $this->db->join("vw_general_ledger", "vw_general_ledger.spare_id = h_invoice_dtl.spare_id", 'left');                        
+            $this->db->join("vw_general_ledger", "vw_general_ledger.spare_id = h_invoice_dtl.spare_id", 'left'); 
+                                   
             $this->db->where($where, NULL, FALSE);
 
             $num_rows = $this->db->count_all_results();        

@@ -1035,6 +1035,7 @@ class fLog_Driver extends fLog_Modeler {
 		$CI->form_validation->set_rules ( 'node', 'Гэмтлийн мод', 'required' );
 		$CI->form_validation->set_rules ( 'reason_id', 'Шалтгаан', 'required|is_natural_no_zero' );
 		$is_reason = $CI->input->get_post ( 'is_reason' );
+
 		if ($is_reason && $is_reason == 6) // бол гадны байгууллагын төхөөрөмжийг сонгосон байх шаардлагатай
 			$CI->form_validation->set_rules ( 'equip_com_id', 'Гадны байгууллагын тоног төхөөрөмжөөс сонгох шаардлагатай', 'required|is_natural_no_zero' );
 
@@ -1052,61 +1053,94 @@ class fLog_Driver extends fLog_Modeler {
 				$data ['parent_id'] = $CI->input->get_post ( 'parent_id' );
 
 			$section_id = $CI->input->get_post ( 'section_id' );
+
 			$equipment_id = $CI->input->get_post ( 'equipment_id' );
+
 			$data ['createdby_id'] = $this->user_id;
+
 			$data ['section_id'] = $section_id;
+
 			$data ['created_dt'] = $CI->input->get_post ( 'created_dt' );
+
 			$data ['equipment_id'] = $CI->input->get_post ( 'equipment_id' );
+
 			$location_id = $CI->input->get_post ( 'location_id' );
+
 			$data ['location_id'] = $location_id;
+
 			$nodes = $CI->input->get_post ( 'nodes' );
+
 			$data ['reason_id'] = $CI->input->get_post ( 'reason_id' );
+
 			$comment = $CI->input->get_post ('comment', TRUE);
+
 			if(empty($comment))
+
 			   $data ['comment'] = null;
+
 			else $data ['comment'] = $CI->input->get_post ( 'comment', TRUE);
+
 			// Гэмтлийн төрөл
 			$data ['type_id'] = $CI->input->get_post ( 'type_id' );
 			// Нээсэн гэмтэл
+
 			$data ['status'] = 'C';
+
 			$equipment = $this->get_row ( 'equipment', array (
 					'equipment_id' => $equipment_id
 			), 'equipment2' );
+
 			$data ['category_id'] = $this->get_row ( 'category_id', array (
 					'equipment_id' => $equipment_id
 			), 'equipment2' );
+
 			$data ['sector_id'] = $this->get_row ( 'sector_id', array (
 					'equipment_id' => $equipment_id
 			), 'equipment2' );
 
-			$return = '';
-
 			if ($this->log_model->insert ( $data, "f_log" ) !== FALSE) {
 				// tuhain aldaanuudiig save hiine!
+
 				// $this->f_p_error
 				$log_id = $CI->db->insert_id ();
 				// herev gemtel гарсан бол бүртгэл нээх
+
 				$idata = array ();
+
 				$ndata = array ();
+
 				$node = json_decode ( $nodes );
 
 				for($i = 0; $i < sizeof ( $node ); $i ++) {
+
 					// end tuhain gemtliin ali ni parent_erro bol update
 					$parent_error = $CI->session->userdata('parent_error_'.$location_id.$equipment_id);
+
 					if($parent_error){
+
 					   if(in_array($node [$i]->node_id, $parent_error))
-					      $ndata['p_error']=1;
+
+						  $ndata['p_error']=1;
+						  
 					   else
-					   	  $ndata['p_error']=0;
+
+							 $ndata['p_error']=0;
+							 
 					}else //yamarch p_error uuseegui
+
 					   	  $ndata['p_error']=-1;
 
 					$ndata ['node_id'] = $node [$i]->node_id;
+
 					// get node by name from get_row from node table
+
 					$ndata['node'] = $this->log_model->get_row('node', array('id' =>$node[$i]->node_id, 'equipment_id'=>$equipment_id), 'vw_ftree');
+
 					$ndata ['log_id'] = $log_id;
+
 					array_push ( $idata, $ndata );
 				}
+				
 				if($this->log_model->insert_batch ( 'f_log_dtl', $idata )){
 					$section_id = $data ['section_id'];
 					// UNSET USER SESSION DATAS
@@ -1509,7 +1543,6 @@ class fLog_Driver extends fLog_Modeler {
 		$xml .= "<total>" . $total_pages . "</total>";
 		$xml .= "<records>" . $count . "</records>";
 		if (isset ( $Qry ))
-                    $xml .= "<query>".$last_qry."</query>";
                     $xml .= "<limit>" . $limit . "</limit>";
 		$xml .= "<start>" . $start . "</start>";
 		foreach ( $Qry->result () as $row ) {
@@ -1534,6 +1567,7 @@ class fLog_Driver extends fLog_Modeler {
 		$xml .= "</rows>";
 
 		$Qry->free_result ();
+
 		return $xml;
 	}
 	protected function delete() {
@@ -2595,6 +2629,7 @@ class f_Log extends fLog_Driver {
 		$CI->load->helper ( 'url' );
 		return $CI->uri->segment ( 4 );
 	}
+
 	function run() {
 		// check state add, edit, delete
 		// initalizing pros
@@ -2615,7 +2650,6 @@ class f_Log extends fLog_Driver {
 				$data ['role'] = $this->get_user_role ();
 				$data ['action'] = $this->action ();
 				// call index page form
-//                                $data ['industry_id'] = $this->check_section ();
 				$data ['form'] = $this->grid_form ();
 				return ( object ) $data;
 				break;
@@ -2638,8 +2672,7 @@ class f_Log extends fLog_Driver {
 				break;
 
 			case 'close' :
-				$return = $this->close ();
-				$data ['json'] = json_encode ( $return );
+				$data ['json'] = json_encode ($this->close() );
 				$data ['view'] = false;
 				return ( object ) $data;
 				break;

@@ -129,14 +129,20 @@ class contract extends CNS_Controller{
     
    function settings(){     
       try{
+
          $output['title']='Тохиргоо';
 
       	 if($this->main_model->get_authority('contract','index','settings', $this->role)=='settings'){
+
             $crud = new grocery_CRUD();	 
-            $this->load->config('grocery_crud');   
-            //get category_id manual then where      
-      	    $crud->set_table('contract');            
-              $crud->display_as('category_id','Бүлэг')              
+
+            $this->load->config('grocery_crud');
+
+            $crud->unset_back_to_list();
+
+             $crud->set_table('contract'); 
+                        
+             $crud->display_as('category_id','Бүлэг')              
                     ->display_as('id','#')         
                     ->display_as('ordering','Эрэмбэ')         
                     ->display_as('contract_no','Гэрээний дугаар')         
@@ -150,10 +156,13 @@ class contract extends CNS_Controller{
               $crud->set_subject('Гэрээ, журам, зөвшөөрөл');
               $crud->set_field_upload('filename','download/contract_files');  
               $crud->set_field_upload('invoice_file','download/contract_files');  
-      	    //$crud->required_fields('city');            
+      	          
       	    $crud->columns('id','ordering','category_id', 'contract_no', 'title', 'filename', 'sides',  'approved', 'expireddate', 'invoice_file');
-      	    $output = $crud->render();
-      	    $this->_settings_output($output);
+             
+             $output = $crud->render();
+
+             $this->_settings_output($output);
+             
       	 }else{
       	    $this->load->view('43.html');
       	 }
@@ -208,7 +217,7 @@ class contract extends CNS_Controller{
   
    function _settings_output($output = null)
    {
-      $this->load->view('settings.php', $output);
+      $this->load->view('contract/output.php', $output);
    }
       
    function get_filesize($file_path){      

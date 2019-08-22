@@ -911,7 +911,7 @@ class eContract extends eContract_Driver {
 					
 			
 			default :
-				if($this->state=='vw_archive')
+				if($this->state=='archived')
 				   $data ['page'] = 'contract\archive';
 				else if($this->state=='frequency')
 				   $data ['page'] = 'contract\frequency';

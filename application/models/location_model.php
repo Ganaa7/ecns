@@ -96,12 +96,12 @@ class Location_model extends MY_Model {
     }
 
 		function get_location_equipment($id, $section_id =false){
-			// code...
+	
       if($section_id)
 			   $sql = "SELECT A.*, B.equipment, C.location FROM loc_equip A inner join ".
              " equipment2 B on A.equipment_id = B.equipment_id".
              " inner join location C on A.location_id = C.location_id WHERE".
-             " A.location_id  = $id and B.section_id = $section_id";
+             " A.location_id  = $id and B.section_id in( $section_id, 10)";
       else 
         $sql = "SELECT A.*, B.equipment, C.location FROM loc_equip A inner join ".
 						 " equipment2 B on A.equipment_id = B.equipment_id".

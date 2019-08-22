@@ -36,7 +36,6 @@ class Core{
   
    	function __construct() {
 
-        // $this->filename = $file;
 
         $CI = &get_instance ();
 

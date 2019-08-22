@@ -17,6 +17,8 @@ class training extends CNS_Controller {
 
 		parent::__construct ();
 
+		
+
 		$this->load->model ( 'trainer_model' );		
 
 		$this->trainer = new trainer_model();
@@ -33,7 +35,6 @@ class training extends CNS_Controller {
 		
 		$this->position_detail = new position_detail_model();		
 
-
 		$this->load->model ( 'position_history_model' );		
 		
 		$this->pos_his = new position_history_model();
@@ -43,8 +44,6 @@ class training extends CNS_Controller {
 		$this->license_equipment = new license_equipment_model();
 
 		$this->load->model ( 'location_model' );		
-
-		// $this->location = new location_model();
 
 		$this->config->set_item ( 'user_menu', $this->user_model->display_menu ( 'training', $this->role, 0, 1 ) );
 		
@@ -138,7 +137,6 @@ class training extends CNS_Controller {
 			}
 		}
 	}
-
 
 	function trainer($sec_code = null) {
 		try {
@@ -240,7 +238,6 @@ class training extends CNS_Controller {
 		}
 	}
 
-	// callback insert training
 	function insert_training_cb($post_array) {
 
 		$post_array ['fullname'] = $post_array ['firstname'] . '.' . mb_substr ( $post_array ['lastname'], 0, 1, 'utf-8' );
@@ -259,7 +256,6 @@ class training extends CNS_Controller {
 
 	}
 	
-	// training edit, add
 	function studying() {
 
 		if ($this->main_model->get_authority ( 'training', 'training', 'training', $this->role ) == 'training') {
@@ -364,33 +360,38 @@ class training extends CNS_Controller {
 
 	function guidance(){
 
-	    $section = $this->section_model->dropdown_by('section_id', 'name', array('type'=>'industry'));	
-	    $section[0] = 'Нэг хэсгийг сонго!';
-	    $section[7] = 'ТТИХ';
-	    asort($section, 1);
-	    $this->data['section']=$section;
+		// Хөтөлбөртэй холбоотой хэсгүүдийг section-с авч байна.
 
-		//$equipment = $this->equipment_model->dropdown('equipment');		
+		$section = $this->section_model->dropdown_by('section_id', 'name', array('type'=>'industry'));	
+		
+		$section[0] = 'Нэг хэсгийг сонго!';
+		
+		$section[7] = 'ТТИХ';
+		
+		asort($section, 1);
+		
+		$this->data['section']=$section;
 
+		
 		$equipment[0] = 'Дээрх хэсгээс эхлээд сонго';
-
-		//asort($equipment, 1);
-
+		
 		$this->data['equipment']=$equipment;
 		
+		// Сургалт явагдах байршилууд
+
 		$this->data['location']=$this->tl_model->dropdown('location', 'location');		
 		
 		$this->config->set_item ( 'module_script', $this->javascript->external ( base_url().'assets/apps/guidance/guidance.js', TRUE ));
 
 		$trip= new Guidance_Module();
 
-      $out = $trip->run ();
-        
-      $this->data['guidance'] = $out;
-        
-      $this->data['page']='guidance\index';
+		$out = $trip->run ();
+			
+		$this->data['guidance'] = $out;
+			
+		$this->data['page']='guidance\index';
 
-      $this->load->view('index', $this->data);
+		$this->load->view('index', $this->data);
 
     }
 
