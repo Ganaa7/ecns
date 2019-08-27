@@ -507,20 +507,35 @@ function clickEvent(eventId, active, done){
 
                 $.ajax({
                    url: base_url+'/maintenance/authorize',
+                   
                    data:data,
+                   
                    type: "POST",
+                   
                    dataType:'json',
+
                    success: function (json) {
-                      if(json.status =='success'){
-                         form.dialog("close");
-                         showMessage(json.message, 'success');
-                         $('#calendar').fullCalendar('refetchEvents');
-                      }else{
-                         $('p.feedback', form).removeClass('success, notify').addClass('error').html(json.message).show();
-                      }
-                   }
-                });
-             }
+                   
+                     if(json.status =='success'){
+                   
+                        form.dialog("close");
+                   
+                        showMessage(json.message, 'success');
+                   
+                        $('#calendar').fullCalendar('refetchEvents');
+                   
+                     }else{
+                   
+                        $('p.feedback', form).removeClass('success, notify').addClass('error').html(json.message).show();
+                   
+                     }
+                   
+                  }
+                
+               });
+             
+            }
+         
          },
           {
              text: "Устгах",

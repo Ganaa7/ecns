@@ -68,9 +68,35 @@ class maintenance extends CNS_Controller {
 
     $location = $this->location_model->dropdown('name');
 
-    if(in_array($this->section_id, array(1, 2, 3, 4, 10)))
-      
+    if(in_array($this->section_id, array(1, 2, 3, 4, 10))){
+
       $this->data['employee'] = $this->employee_model->dropdown_by('employee_id', 'fullname', array('section_id' => $this->section_id));
+
+      $this->db->select('employee_id, fullname');
+
+      //NUBiA-н хэсгүүдийн      
+      if($this->section_id < 5)
+
+         $this->db->where_in('section_id', array($this->section_id, 10));
+      
+      else  
+      
+         $this->db->where_in('section_id', array($this->section_id, 1, 2, 3, 4));
+
+      $Query = $this->db->get('view_employee'); 
+
+      if ($Query->num_rows() > 0) {
+
+        foreach ($Query->result_array() as $row) {
+          
+          $employee[$row['employee_id'] ] = $row['fullname'];
+
+        }
+      }
+
+      $this->data['employee'] = $employee;
+
+    }    
       
     else
 
@@ -235,6 +261,8 @@ class maintenance extends CNS_Controller {
                'message' => "[" . $this->input->post ( 'start' ) . "]-[" . $this->input->post ( 'end' ) . "] хийгдэх \"" . $this->input->post ( 'event' ) . "\" -г амжилттай хадгаллаа."
 
            );
+
+           $this->set_doneby($id, "update");
 
            echo json_encode ( $return );
 

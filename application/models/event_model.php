@@ -275,6 +275,8 @@ class event_model extends MY_Model {
     function authorize($id) {
 
       // check activated? or note
+      //$row = m_event -n $id - r avsan utga
+      
       $event = $this->get($id);
 
       $activatedby_id = $event->activedby_id;

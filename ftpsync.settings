@@ -6,7 +6,7 @@
 
 		"host": "10.1.7.48",
 		"username": "ftpuser",  // or null for anonymous login
-		"password": "user@23C",
+		"password": "u$er@23c",
 		"path": "/",
 
 		"upload_on_save": false, // set *false* if you do not want to upload on save!

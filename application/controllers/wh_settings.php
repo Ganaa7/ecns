@@ -33,54 +33,7 @@ class wh_settings extends CNS_Controller {
 
       $this->load->model ( 'measures_model' );
 	}
-	// Сэлбэгийн тохиргоо
-	function spare2() {
-		try {
-			if ($this->main_model->get_authority ( 'wh_spare', 'wh_settings', 'spare', $this->role ) == 'spare') {
-				$crud = new grocery_CRUD ();
-				$crud->set_table ( 'wh_spare' );
-				$where = "type in('industry', 'govern')";
 
-					// UNSET ACTIONS
-				if ($this->role == 'CHIEFENG') {
-					$crud->unset_delete ();
-					$crud->unset_edit ();
-				} elseif ($this->role != 'ADMIN') {
-					//$crud->unset_edit ();
-					// $crud->unset_add ();
-					$crud->unset_delete ();
-				}
-
-				$crud->set_relation ( 'section_id', 'section', 'name', $where, 'section_id asc' );
-				$crud->set_relation ( 'equipment_id', 'equipment2', 'equipment' );
-				// $crud->set_relation('wh_spare.equipment_id','equipment2','equipment2.sp_id');
-				$crud->set_relation ( 'type_id', 'wh_sparetype', 'sparetype' );
-				$crud->set_relation ( 'sector_id', 'sector', 'name' );
-				/* энэ table-н нэрийг өөрчилнө */
-				$crud->set_relation ( 'measure_id', 'wm_measures', 'measure' );
-				$crud->set_relation ( 'manufacture_id', 'wm_manufacture', 'manufacture' );
-				$crud->add_fields ( 'section_id', 'sector_id', 'equipment_id', 'spare', 'type_id', 'desc', 'part_number', 'measure_id', 'manufacture_id' );
-				
-				$crud->required_fields ( 'section_id', 'sector_id', 'equipment_id', 'spare', 'type_id', 'desc', 'part_number', 'measure_id', 'manufacture_id' );
-				$crud->columns ( 'id', 'section_id', 'sector_id', 'equipment_id', 'spare', 'type_id', 'part_number', 'measure_id', 'manufacture_id' );
-				// $crud->callback_field('section_id',array($this,'section_field_callback'));
-				$crud->callback_field('equipment_id',array($this,'equipment_field_callback'));
-
-				$crud->callback_before_insert(array($this,'insert_callback'));
-
-				$crud->display_as ( 'id', '#' )->display_as ( 'section_id', 'Хэсэг' )->display_as ( 'sector_id', 'Тасаг' )->display_as ( 'equipment_id', 'Төхөөрөмж' )->display_as ( 'type_id', 'Сэлэбэгийн төрөл' )->display_as ( 'spare', 'Сэлбэг' )->display_as ( 'part_number', 'Парт №' )->display_as ( 'measure_id', 'Хэмжих нэгж' )->display_as ( 'manufacture_id', 'Үйлдвэрлэгч' );
-				$crud->set_subject ( 'Сэлбэгийн бүртгэл' );
-				$crud->fields ( 'section_id', 'sector_id', 'equipment_id', 'spare', 'type_id', 'part_number', 'measure_id', 'manufacture_id' );
-				$output = $crud->render ();
-				$this->_settings_output ( $output );
-			} else {
-				$this->load->view ( '43.html' );
-			}
-		} catch ( Exception $e ) {
-			show_error ( $e->getMessage () . ' --- ' . $e->getTraceAsString () );
-		}
-	}
-	
 	// warehouse
 	function warehouse() {
 		try {
@@ -277,7 +230,7 @@ class wh_settings extends CNS_Controller {
 
 	   $this->data['user_type'] = $this->session->userdata('user_type');
 
-	    if(in_array($user->section_id, array(1, 2, 3, 4))){
+	    if(in_array($user->section_id, array(1, 2, 3, 4, 10))){
 
 	       $section=$this->section_model->ext_dropdown('section_id', 'name', 'section_id', $user->section_id);
 
