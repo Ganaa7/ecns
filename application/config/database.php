@@ -57,7 +57,7 @@ $db ['default'] ['password'] = '';
 // test database
 //$db ['default'] ['database'] = 'ecns';
 // development database
- $db['default']['database'] = 'ecns';
+ $db['default']['database'] = 'ecns_launched';
 $db ['default'] ['dbdriver'] = 'mysqli';
 $db ['default'] ['dbprefix'] = '';
 

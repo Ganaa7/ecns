@@ -677,9 +677,9 @@ class eContract_Driver extends eContract_Modeler {
 		
 		$contract = $this->ci->db->get_where('contract', array('id' => $id))->row();
 
-		$file = "D:/xampp/htdocs/ecns/download/contract_files/$contract->filename";
+		$file = "E:/xampp/htdocs/ecns/download/contract_files/$contract->filename";
 		
-		$new_file = "D:/xampp/htdocs/ecns/download/contract_archive_files/$contract->filename";
+		$new_file = "E:/xampp/htdocs/ecns/download/contract_archive_files/$contract->filename";
 		
 		if (!copy($file, $new_file)) {
 
